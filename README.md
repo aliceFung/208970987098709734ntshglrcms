@@ -19,3 +19,6 @@ Fork and clone this repo and get some tests passing!
 * Complete the tests for BinarySearchTree's `new` and `find_node_with_value` methods after that.
 
 **GOOD LUCK!**
+
+
+student: Alice Fung
