@@ -82,19 +82,31 @@ class BinarySearchTree
     until stack.empty?
       parent = stack.pop
       stack << parent.right_child unless parent.right_child.nil?
-      until parent.left_child == nil
-        unless parent.right_child.nil?
-          stack << parent.right_child
-        end
-        unless parent.left_child.right_child.nil?
-          stack << parent.left_child.right_child
-        end
-        parent = parent.left_child
+      left = parent.left_child
+      right = parent.right_child
+      if left.nil? && parent == parent.parent.right_child
+        sorted << parent.value
+      elsif left.nil?
+        sorted << parent.value
+        sorted << parent.parent.value
+      else
+        stack << left
       end
-      sorted << parent.value
     end
     sorted
   end
+  # def sorted_array
+  #   list = [@root]
+  #   sorted = []
+  #   until list.empty?
+  #     current = list.shift
+  #     sorted << current.value
+  #     list << current.right_child unless current.right_child.nil?
+  #     list << current.left_child unless current.left_child.nil?
+  #   end
+  #   sorted.sort
+  # end
+
 
   def min
     parent = @root
