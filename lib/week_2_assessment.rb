@@ -6,6 +6,7 @@
 #   end
 
 # end
+require "pry"
 
 Node = Struct.new(:value, :parent, :left_child, :right_child)
 
@@ -54,19 +55,46 @@ class BinarySearchTree
       parent.left_child = child
     end
   end
-  # def make_child(parent, children_array)
-  #   return if children_array.nil
-  #   next_value = children_array[0]
-  #   if next_value > parent
-  #     right = Node.new(next_value, parent)
-  #     parent.right_child = right
-  #     right.left_child = make_child(right, children_array[n/2..-1])
-  #     right.right_child = make_child(right, children_array[1..n/2-1])
-  #   elsif next_value <= parent
-  #     left = Node.new(next_value, parent)
-  #     parent.left_child = left
-  #     left.left_child = make_child(left, children_array[n/2..-1])
-  #     left.right_child = make_child(left, children_array[1..n/2-1])
-  #   end
-  # end
+
+  def find_node_with_value(num)
+    parent = @root
+    until parent.value == num
+      return if parent.value.nil?
+      if num > parent.value
+        next_node = parent.right_child
+        return nil if next_node.nil?
+        #binding.pry
+        if next_node.value == num
+          return next_node
+        else
+          parent = next_node
+        end
+      elsif num <= parent.value
+        next_node = parent.left_child
+        if next_node.value == num
+          return next_node
+        else
+          parent = next_node
+        end
+      end
+    end #end until loop
+    return parent
+  end
+
+  def sorted_array
+    sorted =[]
+    stack = [@root]
+    until stack.empty?
+      parent = stack.pop
+      stack << parent.right_child
+      until parent.left_child == nil
+        stack << parent.right_child
+        stack << parent.left_child.right_child
+        parent = parent.left_child
+      end
+      sorted << parent
+    end
+    sorted
+  end
+
 end
