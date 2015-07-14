@@ -74,12 +74,24 @@ describe BinarySearchTree do
         expect(root.parent).to be nil
       end
 
-      it "has a right child node with a value equal to 3" do
-        expect(root.right_child.value).to eq 3
+      context "has a right child node" do
+        it "with a value equal to 3" do
+          expect(root.right_child.value).to eq 3
+        end
+
+        it "with parent equal to root" do
+          expect(root.right_child.parent).to eq root
+        end
       end
 
-      it "has a left child node with a value equal to 1" do
-        expect(root.left_child.value).to eq 1
+      context "has a left child node" do
+        it "with a value equal to 1" do
+          expect(root.left_child.value).to eq 1
+        end
+
+        it "with parent equal to root" do
+          expect(root.left_child.parent).to eq root
+        end
       end
 
     end
@@ -149,8 +161,12 @@ describe BinarySearchTree do
           expect(node).to be_a Node
         end
 
-        it "has a value of 46" do
+        it "the node has a value of 46" do
           expect(node.value).to be 46
+        end
+
+        it "the node has a parent with a value of 35" do
+          expect(node.parent.value).to be 35
         end
       end
 
