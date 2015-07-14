@@ -37,7 +37,7 @@ class BinarySearchTree
       right.left_child = make_child(right, children_array[n/2..-1])
       right.right_child = make_child(right, children_array[1..n/2-1])
     elsif next_value <= parent
-      left = Node.new(next_value, parent, children_array[1..n/2-1])
+      left = Node.new(next_value, parent)
       parent.left_child = left
       left.left_child = make_child(left, children_array[n/2..-1])
       left.right_child = make_child(left, children_array[1..n/2-1])
