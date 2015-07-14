@@ -19,7 +19,7 @@ class BinarySearchTree
     raise ArgumentError unless input.all?{|i| i.is_a? Integer}
     @input = input
     @root = self.root
-    add_children(@root, @input[1..-1])
+
     #@root = Node.new(input[0], nil, input[3])
   end
 
@@ -27,12 +27,32 @@ class BinarySearchTree
     root_value = @input[0]
     # children = @input[1..-1]
     root = Node.new(root_value, nil, nil, nil)
-    # root.left_child, root.right_child = make_child(root_value, children)
-    # root
+    grow_tree(root, @input[1..-1])
+    root
   end
 
-  def add_children(parent, array)
+  def grow_tree(root, array)
+    array.each do |num|
+      add_children(root, num)
+    end
+  end
 
+  def add_children(parent, num)
+    if num > parent.value
+      unless parent.right_child.nil?
+        parent = parent.right_child
+        add_children(parent, num)
+      end
+      child = Node.new(num, parent)
+      parent.right_child = child
+    elsif num <= parent.value
+      unless parent.left_child.nil?
+        parent = parent.left_child
+        add_children(parent, num)
+      end
+      child = Node.new(num, parent)
+      parent.left_child = child
+    end
   end
   # def make_child(parent, children_array)
   #   return if children_array.nil
