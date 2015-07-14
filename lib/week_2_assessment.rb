@@ -12,24 +12,25 @@ Node = Struct.new(:value, :parent, :left_child, :right_child)
 
 class BinarySearchTree
 
-  attr_reader :root
+  attr_reader :root, :nodes
 
   def initialize(input)
     raise ArgumentError if input.nil?
     raise ArgumentError unless input.is_a? Array
     raise ArgumentError unless input.all?{|i| i.is_a? Integer}
     @input = input
-    @root = self.root
-
+    @nodes = 1
+    @root = Node.new(@input[0], nil, nil, nil)
+    grow_tree(root, @input[1..-1])
     #@root = Node.new(input[0], nil, input[3])
   end
 
   def root
-    root_value = @input[0]
-    # children = @input[1..-1]
-    root = Node.new(root_value, nil, nil, nil)
-    grow_tree(root, @input[1..-1])
-    root
+    # root_value = @input[0]
+    # # children = @input[1..-1]
+    # root = Node.new(root_value, nil, nil, nil)
+    # grow_tree(root, @input[1..-1])
+    @root
   end
 
   def grow_tree(root, array)
@@ -40,43 +41,37 @@ class BinarySearchTree
 
   def add_children(parent, num)
     if num > parent.value
-      unless parent.right_child.nil?
+      if parent.right_child.nil?
+        child = Node.new(num, parent)
+        @nodes +=1
+        parent.right_child = child
+      else
         parent = parent.right_child
         add_children(parent, num)
       end
-      child = Node.new(num, parent)
-      parent.right_child = child
     elsif num <= parent.value
-      unless parent.left_child.nil?
+      if parent.left_child.nil?
+        child = Node.new(num, parent)
+        @nodes +=1
+        parent.left_child = child
+      else
         parent = parent.left_child
         add_children(parent, num)
       end
-      child = Node.new(num, parent)
-      parent.left_child = child
     end
   end
 
   def find_node_with_value(num)
     parent = @root
+    next_node = nil
     until parent.value == num
-      return if parent.value.nil?
       if num > parent.value
         next_node = parent.right_child
-        return nil if next_node.nil?
-        #binding.pry
-        if next_node.value == num
-          return next_node
-        else
-          parent = next_node
-        end
-      elsif num <= parent.value
+      elsif num < parent.value
         next_node = parent.left_child
-        if next_node.value == num
-          return next_node
-        else
-          parent = next_node
-        end
       end
+      parent = next_node
+      return nil if parent.nil?
     end #end until loop
     return parent
   end
