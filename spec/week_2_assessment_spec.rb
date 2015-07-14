@@ -28,7 +28,7 @@ end
 
 
 describe BinarySearchTree do
-  
+
   let(:tiny_array){ [2,3,1] }
   let(:tiny_tree){ BinarySearchTree.new tiny_array }
 
@@ -74,11 +74,11 @@ describe BinarySearchTree do
         expect(root.parent).to be nil
       end
 
-      it "has a right child equal to 3" do
+      it "has a right child node with a value equal to 3" do
         expect(root.right_child.value).to eq 3
       end
 
-      it "has a left child equal to 1" do
+      it "has a left child node with a value equal to 1" do
         expect(root.left_child.value).to eq 1
       end
 
@@ -100,11 +100,11 @@ describe BinarySearchTree do
         expect(root.parent).to be nil
       end
 
-      it "has a right child equal to 75, the first integer in the array greater than 55" do
+      it "has a right child node with a value of 75, the first integer in the array greater than 55" do
         expect(root.right_child.value).to eq 75
       end
 
-      it "has a left child equal to 33, the first integer in the array less than 55" do
+      it "has a left child node with a value of 33, the first integer in the array less than 55" do
         expect(root.left_child.value).to eq 33
       end
 
@@ -114,28 +114,55 @@ describe BinarySearchTree do
 
   describe "#find_node_with_value" do
 
-    context "when the value is present" do
+    context "searching one level down with a tiny tree" do
+      context "looking for the right child" do
+        let(:right_child){ tiny_tree.find_node_with_value(3) }
 
-      let(:node){ large_tree.find_node_with_value(46) }
+        it "returns a Node object" do
+          expect(right_child).to be_a Node
+        end
 
-      it "returns a Node object" do
-        expect(node).to be_a Node
+        it "has a value equal to 3" do
+          expect(right_child.value).to eq 3
+        end
       end
 
-      it "has a value of 46" do
-        expect(node.value).to be 46
-      end
+      context "looking for the left child" do
+        let(:left_child){ tiny_tree.find_node_with_value(1) }
 
+        it "returns a Node object" do
+          expect(left_child).to be_a Node
+        end
+
+        it "has a value equal to 1" do
+          expect(left_child.value).to eq 1
+        end
+      end
     end
-    
-    context "when the value is not present" do
 
-      let(:node){ large_tree.find_node_with_value(20) }
+    context "searching several levels down in a large tree" do
+      context "when the value is present" do
 
-      it "returns nil" do
-        expect(node).to be nil
+        let(:node){ large_tree.find_node_with_value(46) }
+
+        it "returns a Node object" do
+          expect(node).to be_a Node
+        end
+
+        it "has a value of 46" do
+          expect(node.value).to be 46
+        end
       end
 
+      context "when the value is not present" do
+
+        let(:node){ large_tree.find_node_with_value(20) }
+
+        it "returns nil" do
+          expect(node).to be nil
+        end
+
+      end
     end
   end
 
