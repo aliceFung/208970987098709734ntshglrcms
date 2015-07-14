@@ -6,7 +6,7 @@
 ### Part 2: Binary Search Tree
 Fork and clone this repo and get some tests passing!
 
-**DO NOT:** All of your methods should dynamically generate the requested output. In other words, it's cheating to store the input array as an instance variable for later reference, or have a "count" instance variable that you increment up during the initialization process.
+**DO NOT:** All of your methods should dynamically generate the requested output. In other words, it's cheating to store the input array as an instance variable for later reference.
 
 **DO!**
 
