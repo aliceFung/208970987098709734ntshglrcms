@@ -76,59 +76,34 @@ class BinarySearchTree
     return parent
   end
 
-  # def sorted_array
-  #   sorted =[]
-  #   stack = [@root]
-  #   until stack.empty?
-  #     current = stack.pop
-  #     left = current.left_child
-  #     right = current.right_child
-  #     # sorted << current.parent if current == current.parent.right_child
-  #     #grandparent = current.parent
-  #     stack << right unless right.nil?
-  #     if left.nil?
-  #       sorted << current.value
-  #       while right.nil? && current != current.parent.right_child
-  #         break if current.parent.nil?
-  #         sorted << current.parent.value
-  #         current = current.parent
-  #         right = current.right_child
-  #       end
-  #     else
-  #       stack << left
-  #     end
-  #   end
-  #   sorted
-  # end
-
-  def sorted_array(current = @root, sorted = [])
-    left = current.left_child
-    right = current.right_child
-    if left.nil?
-      return sorted << current.value
-    else
-      sorted = sorted_array(left, sorted)
-    end
-    sorted << current.value unless left.nil?
-    if right.nil? #&& current.parent.right_child.nil?
-      return sorted << current.parent.value
-    else
-      sorted = sorted_array(right, sorted)
-    end
-  end
-
-      #   if left.nil? && current == grandparent.left_child
+  def sorted_array
+    sorted =[]
+    stack = [@root]
+    until stack.empty?
+      current = stack.pop
+      left = current.left_child
+      right = current.right_child
+      # stack << right unless right.nil?
+      # if left.nil?
       #   sorted << current.value
-      #   sorted << grandparent.value
-      #   if grandparent.right_child.nil?
-      #     sorted << grandparent.parent.value
+      #   while right.nil? && current != current.parent.right_child
+      #     break if current.parent.nil?
+      #     sorted << current.parent.value
+      #     current = current.parent
+      #     right = current.right_child
       #   end
-      # elsif left.nil? && current == grandparent.right_child
-      #   sorted << current.value
-      #   #sorted << current.parent.value if current.parent.left_child.right_child.nil?
       # else
       #   stack << left
       # end
+      #
+      # the cheap method below, using sort method
+      sorted << current.value
+      stack << left unless left.nil?
+      stack << right unless right.nil?
+    end
+    sorted.sort
+  end
+
 
   def min
     parent = @root
